@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/flowerbg1"
+    tools:context="com.mostafa.fci.flowerserverapp.Activities.AddFlowerActivity">
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@color/darkgreen"
+        android:minHeight="40dp"
+        app:popupTheme="@style/AppTheme.AppBarOverlay"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="-8dp" >
+        <TextView
+            android:id="@+id/titleToobBarFlowersActivity"
+            android:text="Add Flower"
+            android:textSize="20dp"
+            android:gravity="bottom"
+            android:padding="10dp"
+            android:textColor="@color/white"
+            android:layout_marginLeft="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </android.support.v7.widget.Toolbar>
+
+    <ScrollView
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="70dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginLeft="40dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:padding="10dp"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <ImageButton
+                android:id="@+id/galleryBtn"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_margin="10dp"
+                android:background="@drawable/ic_add_to_photos_white_24dp"
+                android:onClick="getGalleryPhotos"/>
+
+            <EditText
+                android:id="@+id/flowerName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:hint="Flower Name"
+                android:layout_margin="10dp"
+                android:textColorHint="@color/white"
+                android:inputType="textPersonName" />
+
+            <EditText
+                android:id="@+id/flowerCategory"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:hint="Flower Category"
+                android:layout_margin="10dp"
+                android:textColorHint="@color/white"
+                android:inputType="textPersonName" />
+
+            <EditText
+                android:id="@+id/flowerPrice"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:hint="Flower Price"
+                android:layout_margin="10dp"
+                android:textColorHint="@color/white"
+                android:inputType="numberDecimal" />
+
+            <EditText
+                android:id="@+id/flowerInstructions"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:layout_margin="10dp"
+                android:hint="Flower Instructions"
+                android:textColorHint="@color/white"
+                android:inputType="textMultiLine" />
+
+        </LinearLayout>
+    </ScrollView>
+    <Button
+        android:id="@+id/addBtn"
+        android:layout_margin="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAllCaps="false"
+        android:text="Add Flower"
+        android:textColor="@color/textColor"
+        android:background="@drawable/sign_in"
+        android:layout_alignParentBottom="true"
+        android:onClick="addFlowerToFirebase"/>
+</RelativeLayout>
