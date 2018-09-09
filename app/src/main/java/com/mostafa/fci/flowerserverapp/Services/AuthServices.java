@@ -56,7 +56,7 @@ public class AuthServices {
         /**
          * authentication
          * **/
-        auth.signInWithEmailAndPassword("email", "pass")
+        auth.signInWithEmailAndPassword("admin@gmail.com", "admin1")
                 .addOnCompleteListener((Activity) context, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {

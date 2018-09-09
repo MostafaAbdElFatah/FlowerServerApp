@@ -25,10 +25,12 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".Activities.OrdersActivity"
+            android:label="Orders List"
             android:configChanges="orientation"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Activities.DerviriesActivity"
+            android:name=".Activities.DeliveriesActivity"
+            android:label="Delivery List"
             android:configChanges="orientation"
             android:screenOrientation="portrait" />
 

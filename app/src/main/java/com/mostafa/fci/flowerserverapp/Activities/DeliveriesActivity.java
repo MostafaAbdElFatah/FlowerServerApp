@@ -10,12 +10,11 @@ import com.mostafa.fci.flowerserverapp.Classes.Order;
 import com.mostafa.fci.flowerserverapp.R;
 import com.mostafa.fci.flowerserverapp.Services.DBServices;
 import com.mostafa.fci.flowerserverapp.adapter.DerviryRVAdapter;
-import com.mostafa.fci.flowerserverapp.adapter.OrderRVAdapter;
 import com.mostafa.fci.flowerserverapp.interfaces.FetchOrders;
 
 import java.util.ArrayList;
 
-public class DerviriesActivity extends AppCompatActivity {
+public class DeliveriesActivity extends AppCompatActivity {
 
 
     DBServices dbServices;
@@ -40,7 +39,7 @@ public class DerviriesActivity extends AppCompatActivity {
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
-        adapter = new DerviryRVAdapter(DerviriesActivity.this, ordersList );
+        adapter = new DerviryRVAdapter(DeliveriesActivity.this, ordersList );
         recyclerView.setAdapter(adapter);
 
         dbServices = new DBServices();

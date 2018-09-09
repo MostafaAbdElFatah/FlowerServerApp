@@ -1,25 +1,27 @@
 package com.mostafa.fci.flowerserverapp.Activities;
 
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
+import android.widget.Toast;
 
 import com.mostafa.fci.flowerserverapp.Classes.Flower;
+import com.mostafa.fci.flowerserverapp.Utillities.RecyclerViewOnTouchItemHelper;
 import com.mostafa.fci.flowerserverapp.adapter.FlowerRVAdapter;
 import com.mostafa.fci.flowerserverapp.R;
 import com.mostafa.fci.flowerserverapp.Services.AuthServices;
 import com.mostafa.fci.flowerserverapp.Services.DBServices;
 import com.mostafa.fci.flowerserverapp.interfaces.AuthStateChanged;
 import com.mostafa.fci.flowerserverapp.interfaces.FetchFlowers;
-import com.mostafa.fci.flowerserverapp.interfaces.OnItemClickListener;
+import com.mostafa.fci.flowerserverapp.interfaces.RecyclerViewOnTouchItemHelperListener;
 
 import java.util.ArrayList;
 
@@ -47,7 +49,25 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
         adapter = new FlowerRVAdapter(MainActivity.this,flowersList );
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.addItemDecoration(new DividerItemDecoration(this,DividerItemDecoration.VERTICAL));
         recyclerView.setAdapter(adapter);
+        ItemTouchHelper.SimpleCallback itemCallback
+                = new RecyclerViewOnTouchItemHelper(new RecyclerViewOnTouchItemHelperListener() {
+            @Override
+            public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction, int position) {
+
+                Flower flower = flowersList.get(position);
+                flowersList.remove(position);
+                adapter.notifyDataSetChanged();
+                new DBServices().removeOrder(flower);
+                Toast.makeText(MainActivity.this,"Order removed"
+                        ,Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
+        new ItemTouchHelper(itemCallback).attachToRecyclerView(recyclerView);
 
         dbServices = new DBServices();
         AuthServices.signInFirebase(MainActivity.this);
@@ -81,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
             startActivity(new Intent(MainActivity.this,OrdersActivity.class));
             return true;
         }else if (id == R.id.derviries){
-            startActivity(new Intent(MainActivity.this,DerviriesActivity.class));
+            startActivity(new Intent(MainActivity.this,DeliveriesActivity.class));
             return true;
         }
         return super.onOptionsItemSelected(item);

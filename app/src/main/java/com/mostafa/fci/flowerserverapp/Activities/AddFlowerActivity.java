@@ -36,7 +36,7 @@ public class AddFlowerActivity extends AppCompatActivity {
 
     ImageButton galleryBtn;
     int RESULT_LOAD_IMG = 911;
-    Uri filePathUri;
+    Uri filePathUri = null;
     ProgressDialog progressDialog ;
     EditText flowerNameEditText , flowerCategoryEditText
             , flowerInstructionEditText , flowerPriceEditText;
@@ -68,6 +68,11 @@ public class AddFlowerActivity extends AppCompatActivity {
     }
 
     public void addFlowerToFirebase(View view) {
+        if (filePathUri == null){
+            Toast.makeText(AddFlowerActivity.this, "Select Flower Photo"
+                    , Toast.LENGTH_LONG).show();
+            return;
+        }
         if(Network.isOnLine(AddFlowerActivity.this)) {
             progressDialog.setTitle("Uploading Data...");
             progressDialog.show();
@@ -82,8 +87,6 @@ public class AddFlowerActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int reqCode, int resultCode, Intent data) {
         super.onActivityResult(reqCode, resultCode, data);
-
-
         if (resultCode == RESULT_OK && reqCode == RESULT_LOAD_IMG) {
             try {
                 filePathUri = data.getData();

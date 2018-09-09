@@ -30,12 +30,6 @@ public class FlowerRVAdapter extends RecyclerView.Adapter<FlowerRVAdapter.RVHold
 
     Context context;
     ArrayList<Flower> arrayList;
-    OnItemClickListener onItemClickListener = new OnItemClickListener() {
-        @Override
-        public void onItemClick(View view, int position) {
-            showDialog(arrayList.get(position));
-        }
-    };
 
     private StorageReference storageReference;
 
@@ -52,7 +46,7 @@ public class FlowerRVAdapter extends RecyclerView.Adapter<FlowerRVAdapter.RVHold
         View view;
         RVHolder holder;
         view = LayoutInflater.from(parent.getContext()).inflate(R.layout.flower_child_recyclerview, parent, false);
-        holder = new RVHolder(view , onItemClickListener);
+        holder = new RVHolder(view);
         return holder;
 
     }
@@ -118,31 +112,21 @@ public class FlowerRVAdapter extends RecyclerView.Adapter<FlowerRVAdapter.RVHold
      * RecyclerView.ViewHolder
      * **/
 
-    public static class RVHolder extends RecyclerView.ViewHolder implements View.OnLongClickListener
+    public static class RVHolder extends RecyclerView.ViewHolder
 
     {
 
         int type;
         ImageView flowerImage;
         TextView flowerName, flowerPrice, flowerCategory;
-        OnItemClickListener listener;
-        public RVHolder(View itemView,OnItemClickListener clickListener){
+        public RVHolder(View itemView){
             super(itemView);
-            this.listener = clickListener;
-            itemView.setOnLongClickListener(this);
             flowerImage = itemView.findViewById(R.id.imageChildFlower);
             flowerName = itemView.findViewById(R.id.flowerNameChildItem);
             flowerPrice = itemView.findViewById(R.id.flowerPriceChildItem);
             flowerCategory = itemView.findViewById(R.id.flowerCategoryChildItem);
         }
 
-
-        @Override
-        public boolean onLongClick(View view) {
-            if (this.listener != null)
-                this.listener.onItemClick(view,this.getLayoutPosition());
-            return true;
-        }
     }
 
 }
