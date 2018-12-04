@@ -21,15 +21,18 @@
         </activity>
         <activity
             android:name=".Activities.AddFlowerActivity"
+            android:parentActivityName=".Activities.MainActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait" />
         <activity
             android:name=".Activities.OrdersActivity"
+            android:parentActivityName=".Activities.MainActivity"
             android:label="Orders List"
             android:configChanges="orientation"
             android:screenOrientation="portrait" />
         <activity
             android:name=".Activities.DeliveriesActivity"
+            android:parentActivityName=".Activities.MainActivity"
             android:label="Delivery List"
             android:configChanges="orientation"
             android:screenOrientation="portrait" />

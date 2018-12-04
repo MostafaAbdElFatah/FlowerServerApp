@@ -19,7 +19,6 @@ import java.util.ArrayList;
 
 public class AuthServices {
 
-    private static ProgressDialog dialog = null;
 
     final private static FirebaseAuth auth = FirebaseAuth.getInstance();
 
@@ -33,12 +32,6 @@ public class AuthServices {
                     for (AuthStateChanged state: onAuthStateChangedList) {
                         state.onAuthStateChanged();
                     }
-                    if (dialog !=null){
-                        if (dialog.isShowing()) {
-                            dialog.dismiss();
-                        }
-                    }
-
                 }
 
             }
@@ -50,9 +43,6 @@ public class AuthServices {
      * */
     public static void signInFirebase(final Context context) {
 
-        dialog = new ProgressDialog(context);
-        dialog.setMessage("Connecting to Server ......, please wait.");
-        dialog.show();
         /**
          * authentication
          * **/
@@ -68,9 +58,6 @@ public class AuthServices {
                             // If sign in fails, display a message to the user.
                             Toast.makeText(context, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
-                            if (dialog.isShowing()) {
-                                dialog.dismiss();
-                            }
                         }
 
                         // [END_EXCLUDE]

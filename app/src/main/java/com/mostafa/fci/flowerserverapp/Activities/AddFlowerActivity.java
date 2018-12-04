@@ -55,10 +55,12 @@ public class AddFlowerActivity extends AppCompatActivity {
 
         toolbar.setTitle("");
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
         progressDialog = new ProgressDialog(AddFlowerActivity.this);
         Typeface typeface = Typeface.createFromAsset(getAssets(),"fonts/NABILA.TTF");
         addBtn.setTypeface(typeface);
-
     }
 
     public void getGalleryPhotos(View view) {

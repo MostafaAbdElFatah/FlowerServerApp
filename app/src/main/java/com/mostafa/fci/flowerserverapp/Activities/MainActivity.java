@@ -11,9 +11,13 @@ import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.mostafa.fci.flowerserverapp.Classes.Flower;
+import com.mostafa.fci.flowerserverapp.Utillities.Dialog;
+import com.mostafa.fci.flowerserverapp.Utillities.Network;
 import com.mostafa.fci.flowerserverapp.Utillities.RecyclerViewOnTouchItemHelper;
 import com.mostafa.fci.flowerserverapp.adapter.FlowerRVAdapter;
 import com.mostafa.fci.flowerserverapp.R;
@@ -28,6 +32,7 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
 
     DBServices dbServices;
+    ProgressBar progressBar;
     RecyclerView recyclerView;
     RecyclerView.Adapter adapter;
     RecyclerView.LayoutManager layoutManager;
@@ -38,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        progressBar = findViewById(R.id.progressBar);
         recyclerView = findViewById(R.id.recyclerView);
         Toolbar toolbar = findViewById(R.id.toolbar);
 
@@ -70,19 +76,44 @@ public class MainActivity extends AppCompatActivity {
         new ItemTouchHelper(itemCallback).attachToRecyclerView(recyclerView);
 
         dbServices = new DBServices();
-        AuthServices.signInFirebase(MainActivity.this);
-        AuthServices.setOnAuthStateChanged(new AuthStateChanged() {
+        if (!Network.isOnLine(MainActivity.this))
+            Dialog.show(MainActivity.this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        this.checkInternet();
+    }
+
+    private void checkInternet(){
+        if (Network.isOnLine(MainActivity.this)){
+            progressBar.setVisibility(View.VISIBLE);
+            AuthServices.signInFirebase(MainActivity.this);
+            AuthServices.setOnAuthStateChanged(new AuthStateChanged() {
+                @Override
+                public void onAuthStateChanged() {
+                    getFlowerFromServer();
+                }
+            });
+        }
+    }
+
+    void getFlowerFromServer(){
+        dbServices.setOnFetchFlowers(new FetchFlowers() {
             @Override
-            public void onAuthStateChanged() {
-                getFlowerFromServer();
+            public void onCompleted(ArrayList<Flower> flowers) {
+                if (flowers != null && flowers.size() > 0) {
+                    flowersList.clear();
+                    flowersList.addAll(flowers);
+                    adapter.notifyDataSetChanged();
+                    progressBar.setVisibility(View.INVISIBLE);
+                }
             }
         });
 
 
-
-
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -106,22 +137,6 @@ public class MainActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
-    void getFlowerFromServer(){
-        dbServices.setOnFetchFlowers(new FetchFlowers() {
-            @Override
-            public void onCompleted(ArrayList<Flower> flowers) {
-                if (flowers != null && flowers.size() > 0) {
-                    flowersList.clear();
-                    flowersList.addAll(flowers);
-                    adapter.notifyDataSetChanged();
-                }
-            }
-        });
-
-
-    }
-
 
     // end of class
 }
